@@ -1,8 +1,9 @@
 #include <util/delay.h>
 #include <stdio.h>
 #include <avr/io.h>
+#include "UART.h"
 
-
+UART uart;
 char pin = 3;
 char pin_botao=4;
 const unsigned char led_mask = (1 << pin);
@@ -34,6 +35,8 @@ bool le_botao(){
 }
 
 void loop(){
+
+	uart.put('a');
 
 if (le_botao()){
     apaga_led();
