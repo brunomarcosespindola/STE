@@ -36,7 +36,7 @@ bool le_botao(){
 
 void loop(){
 
-	uart.put('a');
+	uart.put(uart.get());
 
 if (le_botao()){
     apaga_led();
