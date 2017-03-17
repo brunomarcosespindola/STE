@@ -3,7 +3,7 @@
 #include <avr/io.h>
 #include "UART.h"
 
-UART uart;
+
 char pin = 3;
 char pin_botao=4;
 const unsigned char led_mask = (1 << pin);
@@ -11,6 +11,8 @@ const unsigned char botao_mask = (1 << pin_botao);
 unsigned char i=0;
 
 unsigned long tempo = 100;
+
+UART uart(19200,UART::DATABITS_8,UART::PARITY_NONE ,UART::STOPBITS_1);
 
 void acende_led(){
     PORTB = PORTB | led_mask;

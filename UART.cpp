@@ -8,14 +8,30 @@
 #include "UART.h"
 #include <avr/io.h>
 
-UART::UART(int br, int db, int pr, int sb)
-:_baudrate(br),_databits(db),_parity(pr),_stopbits(sb)
+UART::UART(unsigned long br,DataBits_t db,ParityBits_t pr,StopBits_t sb)
+: _baudrate(br), _databits(db),_parity(pr),_stopbits(sb)
+
 {   //configura o baudrate
 	UBRR0=(F_CPU / (16ul*_baudrate)) -1;
 	//liga o tx e o rx
 	UCSR0B = (1<<RXEN0)|(1<<TXEN0); // Enable receiver and transmitter
+	//set data bits
+
+	if(_databits==DATABITS_9){
+	//--------FAZER ESSA PARTE
+
+	}
+	else{
+	UCSR0C= (UCSR0C & ~(3<< UCSZ00)) | (_databits<< UCSZ00);
+	}
+
+	//set parity
+	UCSR0C= (UCSR0C & ~(3<< UPM00)) | (_parity<< UPM00);
+	//set stopbits
+	UCSR0C= (UCSR0C & ~(1<<USBS0)) | (_stopbits << USBS0);
+
 	//set frame:8N1
-	UCSR0C = (3<<UCSZ00);
+	//UCSR0C = (3<<UCSZ00);
 
 	// TODO Auto-generated constructor stub
 
