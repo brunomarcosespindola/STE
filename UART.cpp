@@ -19,10 +19,10 @@ UART::UART(unsigned long br,DataBits_t db,ParityBits_t pr,StopBits_t sb)
 
 	if(_databits==DATABITS_9){
 	//--------FAZER ESSA PARTE
-
+		UCSR0C= (UCSR0C & ~(7<< UCSZ00)) | (_databits<< UCSZ00);
 	}
 	else{
-	UCSR0C= (UCSR0C & ~(3<< UCSZ00)) | (_databits<< UCSZ00);
+		UCSR0C= (UCSR0C & ~(3<< UCSZ00)) | (_databits<< UCSZ00);
 	}
 
 	//set parity
