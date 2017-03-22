@@ -1,44 +1,44 @@
-#include <util/delay.h>
+//#include <util/delay.h>
 #include <stdio.h>
 #include <avr/io.h>
 #include "UART.h"
+#include "GPIO.h"
 
 
-char pin = 3;
-char pin_botao=4;
-const unsigned char led_mask = (1 << pin);
-const unsigned char botao_mask = (1 << pin_botao);
 unsigned char i=0;
 
 unsigned long tempo = 100;
 
 UART uart(19200,UART::DATABITS_8,UART::PARITY_NONE ,UART::STOPBITS_1);
 
-void acende_led(){
-    PORTB = PORTB | led_mask;
+GPIO led(11,GPIO::OUTPUT);
 
+GPIO botao(12,GPIO::INPUT);
+void acende_led(){
+//    PORTB = PORTB | led_mask;
+	led.set(1);
 }
 
 void apaga_led(){
-    PORTB = PORTB & ~led_mask;
-
+//    PORTB = PORTB & ~led_mask;
+	led.set(0);
 }
 
 void setup(){
     //DDRB = 0x20;
     //pinMode(pin, OUTPUT);
 
-    DDRB = DDRB | led_mask;
-    DDRB = DDRB & ~(botao_mask);
+//    DDRB = DDRB | led_mask;
+//    DDRB = DDRB & ~(botao_mask);
 }
 
 bool le_botao(){
-    return (PINB & botao_mask);
+    return botao.get();
 }
 
 void loop(){
 
-	uart.put(uart.get());
+	//uart.put(uart.get());
 
 if (le_botao()){
     apaga_led();
